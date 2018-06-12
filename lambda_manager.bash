@@ -45,7 +45,7 @@ function deploy_lambda()
 --runtime python2.7 \
 --timeout 60 \
 --memory-size 1024 
-
+  rm -fr build_sources
   echo -e "\nlambda_function.py deployed!\nCheck out AWS"
   
 }
