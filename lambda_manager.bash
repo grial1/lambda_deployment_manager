@@ -41,7 +41,7 @@ function deploy_lambda()
 --function-name ${1}  \
 --zip-file fileb://${PWD}/${1}.zip \
 --role ${2} \
---handler rds_function.lambda_handler \
+--handler ${1}.lambda_handler \
 --runtime python2.7 \
 --timeout 60 \
 --memory-size 1024 
