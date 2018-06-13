@@ -13,15 +13,15 @@ function init_lambda()
   source bin/activate
 
   # Create template for lambda
-  touch lambda_function.py
-  echo -e "# Import dependencies\n#import boto3" >> lambda_function.py
-  echo -e "\n\ndef lambda_handler(event, context):" >> lambda_function.py
-  echo -e "# mind identation" >> lambda_function.py
+  touch ${1}.py
+  echo -e "# Import dependencies\n#import boto3" >> ${1}.py
+  echo -e "\n\ndef lambda_handler(event, context):" >> ${1}.py
+  echo -e "# mind identation" >> ${1}.py
   
   # Get Boto3
   pip install boto3
 
-  echo -e "\nReady to begin, please open the file lambda_function.py"
+  echo -e "\nReady to begin, please open the file ${1}.py"
 
 }
 
@@ -32,20 +32,20 @@ function deploy_lambda()
 
   # Put together every file on the deployment package
   mkdir build_sources
-  cp lambda_function.py build_sources
-  cp -r lib/python*/* build_sources
-  cd build_sources && zip -r lambda_function.zip *
+  cp ${1}.py build_sources
+  cp -r lib/python*/site-packages/* build_sources
+  cd build_sources && zip -r ${1}.zip *
 
   # Deploy to AWS
   aws lambda create-function \
---function-name lambda_function  \
---zip-file fileb://${PWD}/lambda_function.zip \
---role ${1} \
---handler lambda_function.lambda_handler \
+--function-name ${1}  \
+--zip-file fileb://${PWD}/${1}.zip \
+--role ${2} \
+--handler rds_function.lambda_handler \
 --runtime python2.7 \
 --timeout 60 \
 --memory-size 1024 
-  rm -fr build_sources
-  echo -e "\nlambda_function.py deployed!\nCheck out AWS"
+  cd .. && rm -fr build_sources
+  echo -e "\n${1}.py deployed!\nCheck out AWS"
   
 }

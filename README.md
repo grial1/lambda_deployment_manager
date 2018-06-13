@@ -4,12 +4,13 @@
 ##### Initialize project
 ```
 $source lambda_manager.bash
-$init_lambda <*nombre-proyecto*>
+$init_lambda <nombre-proyecto>
 ```
 
 ##### Deploy package from virtual enviroment
 ```
-// Inside <*nombre-proyecto*> folder
-$deploy_lambda <execution-role-arn>
+// Inside <nombre-proyecto> folder
+$deploy_lambda <nombre-proyecto> <execution-role-arn>
+$deactivate
 ```
 
